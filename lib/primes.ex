@@ -31,15 +31,14 @@ defmodule Primes do
     end
   end
 
-  # Create an initial list of numbers to evaluate as prime. Start with 2 and
-  # include all odd numbers up to max.
+  # Create an initial list of numbers to evaluate as prime.
+  # Includes 2 and all odd numbers up to max.
   def poss_primes(2), do: [2]
   def poss_primes(max) when rem(max, 2) > 0, do: poss_primes([max], max)
   def poss_primes(max), do: poss_primes([max-1], max)
-  def poss_primes(list=[2|_t], _max), do: list
-  def poss_primes(list=[h|_t], _max) when h == 3, do: [2|list] # because 2 is special
-  def poss_primes(list=[h|_t], max) when rem(h-1, 2) == 0, do: poss_primes([h-2|list], max) # skip evens > 2
-  def poss_primes(list=[h|_t], max), do: poss_primes([h-1|list], max) # include all odds
+  def poss_primes(list=[3|_t], _max), do: [2|list] # unless max was 2, processing ends when head is 3
+  def poss_primes(list=[h|_t], max) when rem(h-1, 2) > 0, do: poss_primes([h-1|list], max) # include all odds
+  def poss_primes(list=[h|_t], max), do: poss_primes([h-2|list], max) # skip evens > 2
 
 end
 
