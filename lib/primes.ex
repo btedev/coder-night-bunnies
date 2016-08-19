@@ -20,7 +20,7 @@ defmodule Primes do
     # or nil
     new_p = Enum.find(new_list, fn(x) -> x > p end)
 
-    # use shortcut to end the sieve once p^2 > n
+    # Use shortcut to end the sieve once p^2 > n
     # (note: wish I could use a guard for this but math.pow
     # isn't allowed in a guard)
     case new_p != nil && :math.pow(new_p, 2) > n do
@@ -33,12 +33,10 @@ defmodule Primes do
 
   # Create an initial list of numbers to evaluate as prime.
   # Includes 2 and all odd numbers up to max.
-  def poss_primes(2), do: [2]
-  def poss_primes(max) when rem(max, 2) > 0, do: poss_primes([max], max)
-  def poss_primes(max), do: poss_primes([max-1], max)
-  def poss_primes(list=[3|_t], _max), do: [2|list] # unless max was 2, processing ends when head is 3
-  def poss_primes(list=[h|_t], max) when rem(h-1, 2) > 0, do: poss_primes([h-1|list], max) # include all odds
-  def poss_primes(list=[h|_t], max), do: poss_primes([h-2|list], max) # skip evens > 2
+  def poss_primes(max) do
+    2..max
+    |> Enum.filter(fn(x) -> x == 2 || rem(x, 2) > 0 end)
+  end
 
 end
 
